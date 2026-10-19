@@ -25,7 +25,9 @@ function openCard() {
 
   body.classList.add("card-open");
   flowerScene.setAttribute("aria-hidden", "true");
+  flowerScene.inert = true;
   cardScene.setAttribute("aria-hidden", "false");
+  cardScene.inert = false;
 
   requestAnimationFrame(() => cardShell.classList.add("is-open"));
   window.setTimeout(
