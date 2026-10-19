@@ -1,54 +1,70 @@
 const body = document.body;
-const introCopy = document.querySelector(".intro-copy");
-const flowerStatus = document.getElementById("flowerStatus");
-const openButton = document.getElementById("openCard");
 const flowerScene = document.getElementById("flowerScene");
 const cardScene = document.getElementById("cardScene");
-const cardShell = document.getElementById("cardShell");
 const cardTitle = document.getElementById("cardTitle");
 const replayButton = document.getElementById("replay");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let isReady = false;
+let isOpening = false;
 
-function unlockCard() {
+function delay(milliseconds) {
+  return reducedMotion.matches ? 0 : milliseconds;
+}
+
+function unlockExperience() {
   if (isReady) return;
 
   isReady = true;
-  openButton.disabled = false;
-  introCopy.classList.add("is-ready");
-  flowerStatus.textContent = "Có một lời nhắn đang chờ em…";
+  body.classList.add("scene-ready");
+  flowerScene.setAttribute("aria-disabled", "false");
 }
 
 function openCard() {
-  if (!isReady) return;
+  if (!isReady || isOpening) return;
 
-  body.classList.add("card-open");
+  isOpening = true;
+  body.classList.add("flower-leaving");
+  flowerScene.setAttribute("aria-disabled", "true");
   flowerScene.setAttribute("aria-hidden", "true");
   flowerScene.inert = true;
-  cardScene.setAttribute("aria-hidden", "false");
-  cardScene.inert = false;
 
-  requestAnimationFrame(() => cardShell.classList.add("is-open"));
-  window.setTimeout(
-    () => cardTitle.focus({ preventScroll: true }),
-    reducedMotion.matches ? 0 : 1250,
-  );
+  window.setTimeout(() => {
+    cardScene.setAttribute("aria-hidden", "false");
+    cardScene.inert = false;
+    body.classList.add("card-visible");
+  }, delay(480));
+
+  window.setTimeout(() => {
+    body.classList.add("card-open");
+  }, delay(960));
+
+  window.setTimeout(() => {
+    cardTitle.focus({ preventScroll: true });
+  }, delay(2350));
+}
+
+function handleFlowerKeydown(event) {
+  if (event.key !== "Enter" && event.key !== " ") return;
+
+  event.preventDefault();
+  openCard();
 }
 
 function startExperience() {
   body.classList.remove("container");
 
   if (reducedMotion.matches) {
-    unlockCard();
+    unlockExperience();
     return;
   }
 
   const finalBloom = document.querySelector(".flower__g-fr__leaf--1");
-  finalBloom?.addEventListener("animationend", unlockCard, { once: true });
-  window.setTimeout(unlockCard, 6500);
+  finalBloom?.addEventListener("animationend", unlockExperience, { once: true });
+  window.setTimeout(unlockExperience, 6500);
 }
 
-openButton.addEventListener("click", openCard);
+flowerScene.addEventListener("click", openCard);
+flowerScene.addEventListener("keydown", handleFlowerKeydown);
 replayButton.addEventListener("click", () => window.location.reload());
 window.addEventListener("load", startExperience, { once: true });

@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Một khu vườn nhỏ và tấm thiệp 20/10 dành tặng người con gái anh thương."
+      content="Một khu vườn nhỏ và tấm thiệp dễ thương dành riêng cho Thư."
     />
     <meta name="theme-color" content="#070817" />
     <link rel="stylesheet" href="./assets/flower.css" />
     <link rel="stylesheet" href="./assets/card.css" />
-    <title>Một khu vườn nhỏ dành tặng em | 20/10</title>
+    <title>Một tấm thiệp nhỏ dành tặng Thư</title>
   </head>
 
   <body class="container">
@@ -20,7 +20,10 @@
       <section
         class="flower-scene"
         id="flowerScene"
-        aria-labelledby="introTitle"
+        role="button"
+        tabindex="0"
+        aria-label="Chạm để mở tấm thiệp dành tặng Thư"
+        aria-disabled="true"
       >
         <div class="night"></div>
         <div class="flowers" id="flowers" aria-hidden="true">
@@ -333,17 +336,10 @@
       </div>
         </div>
 
-        <div class="intro-copy">
-          <p class="eyebrow">Ngày Phụ nữ Việt Nam · 20 tháng 10</p>
-          <h1 id="introTitle">Tặng em một khu vườn nhỏ</h1>
-          <p class="flower-status" id="flowerStatus" role="status" aria-live="polite">
-            Những bông hoa đang thức giấc…
-          </p>
-          <button class="open-card" id="openCard" type="button" disabled>
-            <span>Mở thiệp của em</span>
-            <span aria-hidden="true">♡</span>
-          </button>
-        </div>
+        <p class="tap-hint" id="tapHint" role="status" aria-live="polite">
+          <span aria-hidden="true">♡</span>
+          Chạm vào màn hình nhé
+        </p>
       </section>
 
       <section class="card-scene" id="cardScene" aria-hidden="true" inert>
@@ -359,53 +355,46 @@
           <span style="--x: 94%; --delay: 1.6s; --drift: 22px; --size: 10px"></span>
         </div>
 
-        <article class="card-shell" id="cardShell" aria-label="Thiệp chúc mừng 20 tháng 10">
-          <div class="card-page">
-            <div class="card-date">20 · 10</div>
-            <p class="card-kicker">Gửi em, cô gái anh thương</p>
-            <h2 id="cardTitle" tabindex="-1">Chúc em luôn rạng rỡ</h2>
+        <article class="card-shell" id="cardShell" aria-label="Tấm thiệp đôi dành tặng Thư">
+          <section class="letter-page" aria-labelledby="cardTitle">
+            <p class="card-kicker">Gửi Thư,</p>
+            <h1 id="cardTitle" tabindex="-1">Một tấm thiệp nhỏ dành cho em</h1>
             <div class="ornament" aria-hidden="true"><span></span>♡<span></span></div>
 
             <div class="letter-copy">
-              <p>Em à,</p>
+              <p>Hi Thư nhé, anh gửi em tấm thiệp cute nhỏ nhỏ xinh xinh này nha.</p>
               <p>
-                Anh không biết phải gói cả khu vườn vào một món quà thế nào,
-                nên anh để những bông hoa này nở thay lời muốn nói.
+                Chúc em luôn vui, luôn tự tin và luôn được yêu thương theo cách em thích.
               </p>
               <p>
-                Cảm ơn em đã xuất hiện và khiến những ngày bình thường của anh
-                trở nên dịu dàng hơn. Chúc em luôn vui, luôn tự tin và luôn được
-                yêu thương theo cách em xứng đáng.
-              </p>
-              <p>
-                Mong rằng trong thật nhiều ngày sắp tới, anh vẫn là người được ở
-                cạnh, lắng nghe và làm em mỉm cười.
+                Mong thật nhiều điều hạnh phúc sẽ đến với em. Anh sẽ luôn ở đây,
+                lắng nghe em và làm em mỉm cười.
               </p>
             </div>
 
             <p class="signature">Thương em, <strong>Anh ♡</strong></p>
-            <button class="replay" id="replay" type="button">Xem lại từ đầu</button>
+            <button class="replay" id="replay" type="button">Xem lại khu vườn</button>
+          </section>
 
-            <div class="teddy" role="img" aria-label="Một chú gấu bông đang vẫy tay và ôm trái tim">
-              <span class="teddy__ear teddy__ear--left"></span>
-              <span class="teddy__ear teddy__ear--right"></span>
-              <span class="teddy__body"></span>
-              <span class="teddy__arm teddy__arm--left"></span>
-              <span class="teddy__arm teddy__arm--wave"></span>
-              <span class="teddy__head">
-                <span class="teddy__eye teddy__eye--left"></span>
-                <span class="teddy__eye teddy__eye--right"></span>
-                <span class="teddy__muzzle"></span>
-              </span>
-              <span class="teddy__heart" aria-hidden="true">♥</span>
+          <div class="book-cover" aria-hidden="true">
+            <div class="cover-face cover-front">
+              <span class="cover-flower">✿</span>
+              <p>Một điều nhỏ xinh</p>
+              <strong>dành tặng Thư</strong>
+              <span class="cover-note">Chạm để mở</span>
             </div>
-          </div>
 
-          <div class="card-cover" aria-hidden="true">
-            <div class="cover-bloom">✿</div>
-            <p>Dành tặng em</p>
-            <strong>20 · 10</strong>
-            <span>Mở ra nhé</span>
+            <div class="cover-face cover-inside">
+              <figure class="photo-frame">
+                <div class="photo-placeholder" role="img" aria-label="Vị trí dành cho ảnh của Thư">
+                  <span aria-hidden="true">♡</span>
+                  <p>Ảnh của Thư</p>
+                </div>
+                <figcaption>My favorite person</figcaption>
+              </figure>
+              <span class="photo-spark photo-spark--one" aria-hidden="true">✦</span>
+              <span class="photo-spark photo-spark--two" aria-hidden="true">♡</span>
+            </div>
           </div>
         </article>
       </section>
