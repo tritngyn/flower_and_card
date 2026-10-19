@@ -9,6 +9,7 @@
     />
     <meta name="theme-color" content="#070817" />
     <link rel="stylesheet" href="./assets/flower.css" />
+    <link rel="stylesheet" href="./assets/popup-card.css" />
     <link rel="stylesheet" href="./assets/card.css" />
     <title>Một tấm thiệp nhỏ dành tặng Thư</title>
   </head>
@@ -351,12 +352,17 @@
           <span style="--x: 94%; --delay: 1.6s; --drift: 22px; --size: 10px"></span>
         </div>
 
-        <div class="popup-scene">
-          <article class="greeting-card" id="cardShell" aria-label="Tấm thiệp pop-up dành tặng Thư">
-            <div class="popup-card">
-              <i class="card-shadow" aria-hidden="true"></i>
+        <div class="scene">
+          <article
+            class="greeting"
+            id="cardShell"
+            tabindex="-1"
+            aria-label="Tấm thiệp pop-up dành tặng Thư"
+          >
+            <div class="card">
+              <i class="shadow" aria-hidden="true"></i>
 
-              <section class="card-page" aria-labelledby="cardTitle">
+              <section class="page" aria-labelledby="cardTitle">
                 <div class="letter-content">
                   <p class="card-kicker">Gửi Thư,</p>
                   <h1 id="cardTitle" tabindex="-1">Một tấm thiệp nhỏ dành cho em</h1>
@@ -375,16 +381,18 @@
                 </div>
               </section>
 
-              <i class="pop-heart" aria-hidden="true"></i>
+              <i class="pop" aria-hidden="true"></i>
 
-              <div class="popup-cover" aria-hidden="true">
-                <div class="cover-front">
-                  <span class="cover-flower">✿</span>
-                  <p>Một điều nhỏ xinh</p>
-                  <strong>dành tặng Thư</strong>
+              <div class="cover" aria-hidden="true">
+                <div class="front">
+                  <div class="cover-copy">
+                    <span class="cover-flower">✿</span>
+                    <p>Một điều nhỏ xinh</p>
+                    <strong>dành tặng Thư</strong>
+                  </div>
                 </div>
 
-                <div class="cover-inside">
+                <div class="inside">
                   <figure class="photo-frame">
                     <div class="photo-placeholder">
                       <span aria-hidden="true">♡</span>
@@ -394,7 +402,7 @@
                   </figure>
                 </div>
 
-                <i class="pop-heart pop-heart--left" aria-hidden="true"></i>
+                <i class="pop pop-left" aria-hidden="true"></i>
               </div>
             </div>
           </article>

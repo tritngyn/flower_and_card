@@ -29,4 +29,4 @@ Deployment Vercel sẽ được cấu hình sau khi bản localhost được duy
 
 HTML, CSS keyframes và JavaScript khởi động animation hoa được copy từ [gmpsankalpa/Flower-animation](https://github.com/gmpsankalpa/Flower-animation) theo giấy phép MIT. Bản sao giấy phép nằm tại `dist/licenses/Flower-animation-MIT.txt`.
 
-Thiệp được chuyển thể từ snippet MIT [CSS 3D Lab — Pop-up greeting card](https://css3dlab.edgarasneverdauskas.com/models/greeting/), gồm bản lề, perspective, bóng và hai nửa trái tim bật lên. Thông báo giấy phép nằm tại `dist/licenses/CSS-3D-Lab-MIT.txt`.
+`dist/assets/popup-card.css` giữ nguyên snippet MIT [CSS 3D Lab — Pop-up greeting card](https://css3dlab.edgarasneverdauskas.com/models/greeting/), gồm bản lề, perspective, bóng và hai nửa trái tim bật lên. Phần màu sắc, nội dung và chuyển cảnh riêng nằm trong `dist/assets/card.css`. Thông báo giấy phép nằm tại `dist/licenses/CSS-3D-Lab-MIT.txt`.

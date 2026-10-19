@@ -1,6 +1,7 @@
 const body = document.body;
 const flowerScene = document.getElementById("flowerScene");
 const cardScene = document.getElementById("cardScene");
+const cardShell = document.getElementById("cardShell");
 const cardTitle = document.getElementById("cardTitle");
 const replayButton = document.getElementById("replay");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -37,6 +38,7 @@ function openCard() {
 
   window.setTimeout(() => {
     body.classList.add("card-open");
+    cardShell.classList.add("is-open");
   }, delay(960));
 
   window.setTimeout(() => {

@@ -1,0 +1,191 @@
+.scene {
+  /* one base unit: every length below is a multiple of it, so the card is the same share of a
+     card, the editor, a full screen and a recording canvas */
+  --u: 0.38vmin;
+  perspective: calc(800 * var(--u));
+}
+
+/* the static hit target: hovering it only changes numbers */
+.greeting {
+  --open: -96deg;  /* cover angle: half open */
+  --view: 40deg;   /* how far round we look at the card */
+  --x0: calc(14 * var(--u));      /* where the two heart halves meet (see below) */
+  --pop: 0;        /* the heart: hidden while the card is closed */
+  --shift: calc(-34 * var(--u)); /* half shut, the card is all on the spine's right: slide it back */
+  display: grid;
+  place-items: center;
+  width: calc(210 * var(--u));
+  height: calc(180 * var(--u));
+  outline: none;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.greeting:hover,
+.greeting:focus-visible {
+  --open: -166deg; /* almost flat, so it still stands */
+  --view: 24deg;   /* the card turns to face you as it opens */
+  --x0: calc(2 * var(--u));
+  --pop: 1;
+  --shift: 0px;    /* open, it spreads both ways from the spine, so the spine goes in the middle */
+}
+
+/* the card's left edge is the spine: move it to the middle (less --shift while it is shut, so the
+   shut card is centred too), look from above and the left */
+.card {
+  position: relative;
+  width: calc(92 * var(--u));
+  height: calc(124 * var(--u));
+  pointer-events: none;
+  transform-style: preserve-3d;
+  transform-origin: 0 50%;
+  transform: translate(calc(46 * var(--u) + var(--shift)), calc(-4 * var(--u))) rotateX(-18deg) rotateY(var(--view));
+  transition: transform 0.9s cubic-bezier(0.3, 1.15, 0.45, 1);
+}
+
+/* a soft shadow lying on the table */
+.shadow {
+  position: absolute;
+  top: calc(84 * var(--u));
+  left: calc(-101 * var(--u));
+  width: calc(202 * var(--u));
+  height: calc(80 * var(--u));
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.45), transparent);
+  transform: rotateX(90deg);
+}
+
+/* the inside right page: it stays put */
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  gap: calc(3 * var(--u));
+  /* the rows 3 units apart and the words 64 units down, so the signature ends on the page and the
+     heart stays clear of the title: 6 apart from 68 down, it hung off the page's bottom edge, dark
+     on the dark stage */
+  padding: calc(64 * var(--u)) calc(10 * var(--u)) 0 calc(16 * var(--u));
+  border-radius: 0 calc(6 * var(--u)) calc(6 * var(--u)) 0;
+  background:
+    radial-gradient(circle at 78% 16%, #ffb547 0 calc(2.5 * var(--u)), transparent calc(3.5 * var(--u))),
+    radial-gradient(circle at 60% 9%, #2ee6d6 0 calc(2 * var(--u)), transparent calc(3 * var(--u))),
+    radial-gradient(circle at 88% 30%, #ff4d9d 0 calc(2 * var(--u)), transparent calc(3 * var(--u))),
+    linear-gradient(90deg, #e4ddcf, #fbf7ef 18%);
+  color: #5a44b8;
+  backface-visibility: hidden;
+}
+
+.page b { font-size: calc(17 * var(--u)); font-weight: 800; line-height: 0.95; }
+.page span { height: calc(3 * var(--u)); border-radius: calc(2 * var(--u)); background: rgb(20 20 40 / 0.16); }
+.page span:nth-of-type(2) { width: 70%; }
+.page small { color: #6b6478; font-size: calc(7 * var(--u)); font-style: italic; }
+
+/* the heart's shadow on the page, stronger once it has popped up */
+.page::before {
+  content: '';
+  position: absolute;
+  top: calc(18 * var(--u));
+  left: calc(8 * var(--u));
+  width: calc(40 * var(--u));
+  height: calc(46 * var(--u));
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(40 10 50 / 0.4), transparent);
+  opacity: 0.4;
+  transition: opacity 0.9s;
+}
+
+/* the half-open cover shades the page */
+.page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgb(20 10 40 / 0.55), rgb(20 10 40 / 0.1) 85%);
+  transition: opacity 0.9s;
+}
+
+.greeting:is(:hover, :focus-visible) .page::before { opacity: 1; }
+.greeting:is(:hover, :focus-visible) .page::after { opacity: 0.12; }
+
+/* The pop-up is a floating layer: each half stays parallel to its own page, 16 units in front of it.
+   Two such planes meet 16 units × cot(half the opening angle) from the spine: that is --x0. */
+.pop {
+  position: absolute;
+  top: calc(12 * var(--u));
+  left: 0;
+  width: calc(28 * var(--u));
+  height: calc(48 * var(--u));
+  background:
+    radial-gradient(circle at 50% 22%, rgb(255 255 255 / 0.75) 0 calc(2.5 * var(--u)), transparent calc(6 * var(--u))),
+    linear-gradient(170deg, #ff4d9d, #ff817a);
+  /* the right half of a heart: its middle line is the left edge. A mask, not clip-path: path(),
+     because path() is in pixels and would not scale with --u; the SVG's viewBox is the box, 28 × 48,
+     stretched to whatever size the box is */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M0 9 C 3 3 7 0 12 0 C 21 0 28 6 28 16 C 28 28 16 38 0 48 Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M0 9 C 3 3 7 0 12 0 C 21 0 28 6 28 16 C 28 28 16 38 0 48 Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  transform: translate3d(var(--x0), 0, calc(16 * var(--u)));
+  opacity: var(--pop); /* fades in as it rises; behind the closed cover it is never meant to show */
+  transition: transform 0.9s cubic-bezier(0.3, 1.15, 0.45, 1), opacity 0.35s;
+}
+
+/* the left half rides on the cover's inside, turned round to face the right half
+   (turning it round mirrors it, so its middle line is drawn on its right edge) */
+.pop-left {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M28 9 C 25 3 21 0 16 0 C 7 0 0 6 0 16 C 0 28 12 38 28 48 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M28 9 C 25 3 21 0 16 0 C 7 0 0 6 0 16 C 0 28 12 38 28 48 Z'/%3E%3C/svg%3E");
+  transform: translate3d(var(--x0), 0, calc(-16 * var(--u))) rotateY(180deg);
+}
+
+/* the front cover: two faces back to back, hinged on the spine */
+.cover {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 0 50%;
+  transform: translateZ(calc(2 * var(--u))) rotateY(var(--open));
+  transition: transform 0.9s cubic-bezier(0.3, 1.15, 0.45, 1);
+}
+
+.front,
+.inside {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  border-radius: 0 calc(6 * var(--u)) calc(6 * var(--u)) 0;
+  backface-visibility: hidden;
+}
+
+.front {
+  place-items: center;
+  background:
+    radial-gradient(circle at 22% 18%, rgb(255 255 255 / 0.75) 0 calc(2 * var(--u)), transparent calc(3 * var(--u))),
+    radial-gradient(circle at 76% 26%, #ffb547 0 calc(3 * var(--u)), transparent calc(4 * var(--u))),
+    radial-gradient(circle at 30% 80%, #2ee6d6 0 calc(2.5 * var(--u)), transparent calc(3.5 * var(--u))),
+    linear-gradient(150deg, #6a45f5, #d1206f); /* deep enough for the white words, 5.1:1 at the worst end */
+}
+
+.front b {
+  padding: calc(10 * var(--u)) calc(12 * var(--u));
+  border: calc(2 * var(--u)) solid rgb(255 255 255 / 0.85);
+  border-radius: 50%;
+  color: #fff;
+  font-size: calc(15 * var(--u));
+  line-height: 1;
+  text-align: center;
+}
+
+/* the inside of the cover, seen once it swings past 90° */
+.inside {
+  place-items: end center;
+  padding-bottom: calc(14 * var(--u));
+  border-radius: calc(6 * var(--u)) 0 0 calc(6 * var(--u));
+  background:
+    repeating-linear-gradient(135deg, rgb(139 108 255 / 0.12) 0 calc(6 * var(--u)), transparent calc(6 * var(--u)) calc(12 * var(--u))),
+    linear-gradient(270deg, #e4ddcf, #fbf7ef 18%);
+  color: #5a44b8;
+  font-size: calc(7 * var(--u));
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transform: rotateY(180deg);
+}
