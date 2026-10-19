@@ -52,8 +52,6 @@ function handleFlowerKeydown(event) {
 }
 
 function startExperience() {
-  body.classList.remove("container");
-
   if (reducedMotion.matches) {
     unlockExperience();
     return;

@@ -1,7 +1,6 @@
 :root {
-  --dark-color: #070817;
   --paper: #fffaf2;
-  --paper-deep: #f4e4d7;
+  --paper-deep: #f2dfd0;
   --ink: #432637;
   --rose: #c64d79;
   --rose-dark: #8f3156;
@@ -12,14 +11,6 @@
 html {
   color-scheme: dark;
   font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-body {
-  display: block;
-  min-height: 100svh;
-  color: #fff;
-  background: var(--dark-color);
-  overflow: hidden;
 }
 
 button {
@@ -54,10 +45,15 @@ button {
   isolation: isolate;
 }
 
+/* This wrapper reproduces the original demo body's layout without touching its flower classes. */
 .flower-scene {
   z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   overflow: hidden;
   outline: 0;
+  perspective: 1000px;
   transition: opacity 0.8s ease, filter 0.8s ease, transform 0.9s ease;
 }
 
@@ -72,108 +68,19 @@ button {
   pointer-events: none;
 }
 
-.night {
-  background-image:
-    radial-gradient(circle at 18% 20%, rgba(161, 73, 151, 0.16), transparent 30%),
-    radial-gradient(circle at 78% 12%, rgba(76, 125, 174, 0.14), transparent 26%),
-    radial-gradient(ellipse at bottom, rgba(126, 72, 134, 0.22), transparent 58%),
-    linear-gradient(180deg, #050612 0%, #0b0b22 55%, #080716 100%);
-}
-
-.flowers {
-  position: absolute;
-  left: 50%;
-  bottom: -2vmin;
-  transform: translateX(-50%) scale(0.88);
-  transform-origin: center bottom;
-  will-change: transform;
-}
-
-.flower__leaf,
-.flower__leaf--4 {
-  background-color: #db5b91;
-  background-image: linear-gradient(to top, #bb3f77, #ff8eb5);
-  box-shadow:
-    inset 0 0 2vmin rgba(255, 255, 255, 0.55),
-    0 0 2.5vmin rgba(231, 91, 153, 0.36);
-}
-
-.flower__leafs::after {
-  background-color: #ff7aad;
-}
-
-.flower__white-circle {
-  background-color: #fff2ce;
-}
-
-.flower__white-circle::after {
-  background: radial-gradient(circle, #8a4a38 0 28%, #d99b5f 30% 52%, #f7d98e 55% 100%);
-}
-
-.flower__light,
-.flower__light:nth-child(odd) {
-  background-color: #ffd3e2;
-  box-shadow: 0 0 1.4vmin rgba(255, 166, 204, 0.9);
-}
-
-.flower__line {
-  background-image:
-    linear-gradient(to left, rgba(0, 0, 0, 0.22), transparent, rgba(255, 255, 255, 0.2)),
-    linear-gradient(to top, transparent 8%, #174b3e, #287761);
-}
-
-.flower__line__leaf {
-  background-image: linear-gradient(to top, rgba(22, 80, 60, 0.5), #3d9a75);
-}
-
-.tap-hint {
-  position: absolute;
-  left: 50%;
-  bottom: max(5vh, 1.5rem);
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0;
-  padding: 0.72rem 1rem;
-  color: rgba(255, 248, 251, 0.9);
-  background: rgba(31, 18, 43, 0.42);
-  border: 1px solid rgba(255, 211, 226, 0.3);
-  border-radius: 999px;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(0.86rem, 2.8vw, 1rem);
-  opacity: 0;
-  transform: translate(-50%, 14px);
-  pointer-events: none;
-  backdrop-filter: blur(10px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
-}
-
-.tap-hint span {
-  color: #ffb7d1;
-}
-
-.scene-ready .tap-hint {
-  opacity: 1;
-  transform: translate(-50%, 0);
-  animation: hint-pulse 2.4s 0.6s ease-in-out infinite;
-}
-
-.flower-scene:focus-visible .tap-hint {
-  outline: 3px solid #ffd3e2;
-  outline-offset: 5px;
+.flower-scene:focus-visible {
+  box-shadow: inset 0 0 0 3px rgba(255, 211, 226, 0.72);
 }
 
 .card-scene {
   z-index: 5;
   display: grid;
   place-items: center;
-  padding: max(1rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right))
-    max(1rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+  padding: max(0.75rem, env(safe-area-inset-top)) max(0.5rem, env(safe-area-inset-right))
+    max(0.75rem, env(safe-area-inset-bottom)) max(0.5rem, env(safe-area-inset-left));
   background:
-    radial-gradient(circle at 18% 18%, rgba(198, 77, 121, 0.22), transparent 33%),
-    radial-gradient(circle at 82% 76%, rgba(207, 170, 104, 0.12), transparent 36%),
+    radial-gradient(circle at 18% 18%, rgb(198 77 121 / 0.2), transparent 33%),
+    radial-gradient(circle at 82% 76%, rgb(207 170 104 / 0.12), transparent 36%),
     linear-gradient(145deg, #120c1b, #211025 50%, #0d0b17);
   opacity: 0;
   pointer-events: none;
@@ -185,266 +92,287 @@ button {
   pointer-events: auto;
 }
 
-.card-shell {
-  position: relative;
-  z-index: 2;
-  width: min(92vw, 900px);
-  height: min(74svh, 560px);
-  min-height: 430px;
-  opacity: 0;
-  perspective: 1800px;
-  transform: translate3d(-25%, 38px, 0) scale(0.91);
-  transform-style: preserve-3d;
-  transition:
-    opacity 0.65s ease,
-    transform 1.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.card-visible .card-shell {
-  opacity: 1;
-}
-
-.card-open .card-shell {
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-.letter-page,
-.cover-face {
-  position: absolute;
-  top: 0;
-  width: 50%;
+/* Adapted from CSS 3D Lab's MIT-licensed pop-up greeting card snippet. */
+.popup-scene {
+  --u: min(0.36vw, 0.48vh);
+  display: grid;
+  place-items: center;
+  width: 100%;
   height: 100%;
-  border: 1px solid rgba(210, 172, 112, 0.58);
+  perspective: calc(800 * var(--u));
 }
 
-.letter-page {
-  right: 0;
-  z-index: 1;
+.greeting-card {
+  --open: 0deg;
+  --view: 0deg;
+  --x0: calc(18 * var(--u));
+  --pop: 0;
+  --shift: calc(-46 * var(--u));
+  display: grid;
+  place-items: center;
+  width: calc(210 * var(--u));
+  height: calc(170 * var(--u));
+  opacity: 0;
+  outline: none;
+  transform: translateY(calc(10 * var(--u))) scale(0.94);
+  transform-style: preserve-3d;
+  transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-visible .greeting-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.card-open .greeting-card {
+  --open: -166deg;
+  --view: 24deg;
+  --x0: calc(2 * var(--u));
+  --pop: 1;
+  --shift: 0px;
+}
+
+.popup-card {
+  position: relative;
+  width: calc(92 * var(--u));
+  height: calc(124 * var(--u));
+  pointer-events: none;
+  transform: translate(calc(46 * var(--u) + var(--shift)), calc(-4 * var(--u)))
+    rotateX(-18deg) rotateY(var(--view));
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+  transition: transform 1.1s cubic-bezier(0.3, 1.15, 0.45, 1);
+}
+
+.card-shadow {
+  position: absolute;
+  top: calc(84 * var(--u));
+  left: calc(-101 * var(--u));
+  width: calc(202 * var(--u));
+  height: calc(80 * var(--u));
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.48), transparent);
+  transform: rotateX(90deg);
+}
+
+.card-page {
+  position: absolute;
+  inset: 0;
   overflow: auto;
-  padding: clamp(2rem, 5vh, 3.3rem) clamp(1.4rem, 4vw, 3rem) 1.5rem;
+  padding: calc(42 * var(--u)) calc(8 * var(--u)) calc(6 * var(--u)) calc(11 * var(--u));
   color: var(--ink);
   background:
-    radial-gradient(circle at 92% 8%, rgba(207, 170, 104, 0.15), transparent 23%),
-    linear-gradient(145deg, #fffdf9, var(--paper) 48%, var(--paper-deep));
-  border-radius: 0 22px 22px 0;
-  box-shadow: 28px 28px 70px rgba(0, 0, 0, 0.4);
+    radial-gradient(circle at 83% 13%, #ffc7da 0 calc(2.2 * var(--u)), transparent calc(3.2 * var(--u))),
+    radial-gradient(circle at 67% 7%, #e2b96e 0 calc(1.8 * var(--u)), transparent calc(2.8 * var(--u))),
+    linear-gradient(90deg, #e3d8cc, #fffaf2 18%, #fffdf9);
+  border: calc(0.25 * var(--u)) solid rgb(203 167 111 / 0.5);
+  border-radius: 0 calc(6 * var(--u)) calc(6 * var(--u)) 0;
+  backface-visibility: hidden;
   scrollbar-width: thin;
-  scrollbar-color: rgba(143, 49, 86, 0.35) transparent;
+  scrollbar-color: rgb(143 49 86 / 0.35) transparent;
 }
 
-.letter-page::before {
+.card-page::before {
   content: "";
   position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(207, 170, 104, 0.32);
-  border-radius: 0 12px 12px 0;
-  pointer-events: none;
+  left: calc(6 * var(--u));
+  top: calc(7 * var(--u));
+  width: calc(30 * var(--u));
+  height: calc(35 * var(--u));
+  background: radial-gradient(closest-side, rgb(90 23 55 / 0.34), transparent);
+  border-radius: 50%;
+  opacity: 0.35;
+  transition: opacity 1.1s;
 }
 
-.letter-page::after {
+.card-page::after {
   content: "";
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 20px;
-  background: linear-gradient(90deg, rgba(79, 45, 57, 0.18), transparent);
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, rgb(20 10 40 / 0.55), rgb(20 10 40 / 0.08) 85%);
+  border-radius: inherit;
   pointer-events: none;
+  transition: opacity 1.1s;
 }
 
-.letter-page > * {
+.card-open .card-page::before {
+  opacity: 0.85;
+}
+
+.card-open .card-page::after {
+  opacity: 0.08;
+}
+
+.letter-content {
   position: relative;
   z-index: 1;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.6s 1.05s ease, transform 0.6s 1.05s ease;
+  transform: translateY(calc(3 * var(--u)));
+  transition: opacity 0.55s 0.78s ease, transform 0.55s 0.78s ease;
 }
 
-.card-open .letter-page > * {
+.card-open .letter-content {
   opacity: 1;
   transform: translateY(0);
 }
 
 .card-kicker {
   color: var(--rose-dark);
-  font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+  font-size: clamp(0.62rem, calc(2.6 * var(--u)), 0.78rem);
   font-weight: 800;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.letter-page h1 {
-  max-width: 340px;
-  margin-top: 0.55rem;
+.card-page h1 {
+  margin: calc(1.4 * var(--u)) 0 calc(3 * var(--u));
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.6rem, 4vw, 2.65rem);
+  font-size: clamp(1rem, calc(7.2 * var(--u)), 2.15rem);
   font-weight: 500;
-  line-height: 1.03;
+  line-height: 1.02;
   letter-spacing: -0.035em;
-  text-wrap: balance;
-}
-
-.ornament {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  width: min(190px, 72%);
-  margin: 1rem 0;
-  color: var(--rose);
-}
-
-.ornament span {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold));
-}
-
-.ornament span:last-child {
-  transform: scaleX(-1);
 }
 
 .letter-copy {
-  max-width: 350px;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(0.86rem, 2vw, 1.02rem);
-  line-height: 1.58;
+  font-size: clamp(0.64rem, calc(3.6 * var(--u)), 0.95rem);
+  line-height: 1.48;
 }
 
 .letter-copy p + p {
-  margin-top: 0.8rem;
+  margin-top: calc(2.2 * var(--u));
 }
 
 .signature {
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
+  margin-top: calc(2.6 * var(--u));
   color: var(--rose-dark);
   font-family: "Segoe Print", "Comic Sans MS", cursive;
-  font-size: 0.88rem;
+  font-size: clamp(0.61rem, calc(2.9 * var(--u)), 0.82rem);
 }
 
 .signature strong {
-  font-size: 1.1rem;
+  font-size: 1.08em;
   font-weight: 600;
 }
 
 .replay {
-  margin-top: 1rem;
-  padding: 0.45rem 0;
+  margin-top: calc(2.2 * var(--u));
+  padding: 0.3rem 0;
   color: var(--rose-dark);
   background: none;
   border: 0;
-  border-bottom: 1px solid rgba(143, 49, 86, 0.35);
-  font-size: 0.72rem;
+  border-bottom: 1px solid rgb(143 49 86 / 0.35);
+  font-size: clamp(0.58rem, calc(2.5 * var(--u)), 0.72rem);
   font-weight: 700;
+  pointer-events: auto;
   cursor: pointer;
 }
 
 .replay:focus-visible,
 #cardTitle:focus-visible {
   outline: 3px solid #d65f8b;
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
-.book-cover {
+.pop-heart {
   position: absolute;
-  left: 50%;
-  top: 0;
-  z-index: 4;
-  width: 50%;
-  height: 100%;
-  transform: rotateY(0deg);
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 1.35s cubic-bezier(0.65, 0, 0.2, 1);
-  will-change: transform;
+  top: calc(7 * var(--u));
+  left: 0;
+  z-index: 3;
+  width: calc(20 * var(--u));
+  height: calc(34 * var(--u));
+  background:
+    radial-gradient(circle at 50% 22%, rgb(255 255 255 / 0.75) 0 calc(1.8 * var(--u)), transparent calc(4.5 * var(--u))),
+    linear-gradient(170deg, #ff4d9d, #ff817a);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M0 9 C 3 3 7 0 12 0 C 21 0 28 6 28 16 C 28 28 16 38 0 48 Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M0 9 C 3 3 7 0 12 0 C 21 0 28 6 28 16 C 28 28 16 38 0 48 Z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+  opacity: var(--pop);
+  transform: translate3d(var(--x0), 0, calc(12 * var(--u)));
+  transition: transform 1.1s cubic-bezier(0.3, 1.15, 0.45, 1), opacity 0.35s;
 }
 
-.card-open .book-cover {
-  transform: rotateY(-180deg);
+.pop-heart--left {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M28 9 C 25 3 21 0 16 0 C 7 0 0 6 0 16 C 0 28 12 38 28 48 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 48'%3E%3Cpath d='M28 9 C 25 3 21 0 16 0 C 7 0 0 6 0 16 C 0 28 12 38 28 48 Z'/%3E%3C/svg%3E");
+  transform: translate3d(var(--x0), 0, calc(-12 * var(--u))) rotateY(180deg);
 }
 
-.cover-face {
+.popup-cover {
+  position: absolute;
   inset: 0;
-  width: 100%;
-  overflow: hidden;
-  backface-visibility: hidden;
-  box-shadow: 18px 28px 70px rgba(0, 0, 0, 0.43);
+  z-index: 4;
+  transform: translateZ(calc(2 * var(--u))) rotateY(var(--open));
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+  transition: transform 1.1s cubic-bezier(0.3, 1.15, 0.45, 1);
 }
 
-.cover-face::before {
-  content: "";
+.cover-front,
+.cover-inside {
   position: absolute;
-  inset: 14px;
-  border: 1px solid rgba(255, 230, 195, 0.42);
-  border-radius: 12px;
-  pointer-events: none;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  border: calc(0.3 * var(--u)) solid rgb(255 230 195 / 0.38);
+  border-radius: 0 calc(6 * var(--u)) calc(6 * var(--u)) 0;
+  backface-visibility: hidden;
 }
 
 .cover-front {
-  display: grid;
   place-content: center;
   justify-items: center;
-  padding: 2rem;
+  padding: calc(9 * var(--u));
   color: #fff7ef;
   text-align: center;
   background:
-    radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.12), transparent 23%),
-    linear-gradient(145deg, #762648, #ae426d 52%, #641c3c);
-  border-radius: 20px 22px 22px 20px;
+    radial-gradient(circle at 22% 18%, rgb(255 255 255 / 0.7) 0 calc(2 * var(--u)), transparent calc(3 * var(--u))),
+    radial-gradient(circle at 76% 26%, #f0bd68 0 calc(3 * var(--u)), transparent calc(4 * var(--u))),
+    radial-gradient(circle at 30% 80%, #f794ba 0 calc(2.5 * var(--u)), transparent calc(3.5 * var(--u))),
+    linear-gradient(150deg, #762648, #ae426d 54%, #641c3c);
 }
 
 .cover-flower {
   color: var(--cream);
-  font-size: clamp(3rem, 8vw, 5rem);
-  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.25));
+  font-size: calc(18 * var(--u));
+  line-height: 1;
+  filter: drop-shadow(0 calc(1.5 * var(--u)) calc(4 * var(--u)) rgb(0 0 0 / 0.25));
 }
 
 .cover-front p {
-  margin-top: 0.9rem;
+  margin-top: calc(4 * var(--u));
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(0.92rem, 2.5vw, 1.15rem);
+  font-size: clamp(0.68rem, calc(4 * var(--u)), 1rem);
   font-style: italic;
 }
 
 .cover-front strong {
-  margin-top: 0.45rem;
+  margin-top: calc(1.5 * var(--u));
   color: var(--cream);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.55rem, 4vw, 2.5rem);
+  font-size: clamp(1rem, calc(7 * var(--u)), 2rem);
   font-weight: 500;
 }
 
-.cover-note {
-  margin-top: 1.4rem;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
 .cover-inside {
-  display: grid;
-  place-items: center;
-  padding: clamp(1rem, 3vw, 2.25rem);
+  place-items: end center;
+  padding: calc(35 * var(--u)) calc(9 * var(--u)) calc(8 * var(--u));
   color: var(--ink);
   background:
-    radial-gradient(circle at 12% 12%, rgba(198, 77, 121, 0.12), transparent 22%),
-    linear-gradient(215deg, #fffdf9, var(--paper) 50%, var(--paper-deep));
-  border-radius: 22px 0 0 22px;
+    repeating-linear-gradient(135deg, rgb(198 77 121 / 0.08) 0 calc(6 * var(--u)), transparent calc(6 * var(--u)) calc(12 * var(--u))),
+    linear-gradient(270deg, #e3d8cc, #fffaf2 18%);
+  border-radius: calc(6 * var(--u)) 0 0 calc(6 * var(--u));
   transform: rotateY(180deg);
 }
 
-.cover-inside::before {
-  border-color: rgba(207, 170, 104, 0.34);
-}
-
 .photo-frame {
-  width: min(78%, 300px);
+  width: 72%;
   margin: 0;
-  padding: clamp(0.55rem, 1.7vw, 0.85rem) clamp(0.55rem, 1.7vw, 0.85rem)
-    clamp(1rem, 2.8vw, 1.5rem);
+  padding: calc(2.2 * var(--u)) calc(2.2 * var(--u)) calc(4 * var(--u));
   background: #fffdfa;
-  border: 1px solid rgba(114, 78, 68, 0.14);
-  box-shadow: 0 16px 35px rgba(78, 43, 54, 0.2);
+  border: 1px solid rgb(114 78 68 / 0.14);
+  box-shadow: 0 calc(4 * var(--u)) calc(10 * var(--u)) rgb(78 43 54 / 0.2);
   transform: rotate(-2.5deg);
 }
 
@@ -454,47 +382,30 @@ button {
   width: 100%;
   aspect-ratio: 4 / 5;
   place-content: center;
-  color: rgba(255, 255, 255, 0.86);
+  color: rgb(255 255 255 / 0.88);
   background:
-    radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.25), transparent 26%),
+    radial-gradient(circle at 28% 20%, rgb(255 255 255 / 0.25), transparent 26%),
     linear-gradient(145deg, #d47798, #984061 55%, #6f2c4d);
   object-fit: cover;
 }
 
 .photo-placeholder span {
-  font-size: clamp(2.5rem, 7vw, 4rem);
+  font-size: calc(13 * var(--u));
   text-align: center;
 }
 
 .photo-placeholder p {
-  margin-top: 0.4rem;
+  margin-top: calc(1.5 * var(--u));
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(0.75rem, 2vw, 1rem);
+  font-size: clamp(0.58rem, calc(3.5 * var(--u)), 0.86rem);
 }
 
 .photo-frame figcaption {
-  margin-top: 0.75rem;
+  margin-top: calc(2 * var(--u));
   color: var(--rose-dark);
   font-family: "Segoe Print", "Comic Sans MS", cursive;
-  font-size: clamp(0.7rem, 1.7vw, 0.9rem);
+  font-size: clamp(0.56rem, calc(3 * var(--u)), 0.8rem);
   text-align: center;
-}
-
-.photo-spark {
-  position: absolute;
-  color: var(--rose);
-}
-
-.photo-spark--one {
-  right: 9%;
-  top: 8%;
-  font-size: 1.4rem;
-}
-
-.photo-spark--two {
-  left: 8%;
-  bottom: 8%;
-  font-size: 1.1rem;
 }
 
 .petal-field {
@@ -520,16 +431,6 @@ button {
   animation: petal-fall 7s var(--delay) cubic-bezier(0.25, 0.55, 0.45, 1) 1 both;
 }
 
-@keyframes hint-pulse {
-  0%,
-  100% {
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255, 191, 216, 0);
-  }
-  50% {
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25), 0 0 0 10px rgba(255, 191, 216, 0.08);
-  }
-}
-
 @keyframes petal-fall {
   0% {
     opacity: 0;
@@ -546,84 +447,32 @@ button {
 }
 
 @media (max-width: 650px) {
-  .flowers {
-    bottom: -7vmin;
-    transform: translateX(-50%) scale(0.72);
+  .popup-scene {
+    --u: 0.5vw;
   }
 
-  .card-shell {
-    width: 96vw;
-    height: min(76svh, 520px);
-    min-height: 430px;
+  .greeting-card {
+    height: calc(230 * var(--u));
   }
 
-  .letter-page {
-    padding: 1.45rem 0.85rem 1rem;
+  .popup-card {
+    height: calc(200 * var(--u));
   }
 
-  .letter-page::before {
-    inset: 7px;
+  .card-shadow {
+    top: calc(158 * var(--u));
   }
 
-  .letter-page h1 {
-    margin-top: 0.35rem;
-    font-size: clamp(1.15rem, 5vw, 1.55rem);
+  .card-page {
+    padding-top: calc(43 * var(--u));
   }
 
-  .ornament {
-    margin: 0.65rem 0;
-  }
-
-  .letter-copy {
-    font-size: clamp(0.69rem, 3vw, 0.78rem);
-    line-height: 1.46;
-  }
-
-  .letter-copy p + p {
-    margin-top: 0.58rem;
-  }
-
-  .signature {
-    margin-top: 0.65rem;
-    font-size: 0.7rem;
-  }
-
-  .signature strong {
-    font-size: 0.84rem;
-  }
-
-  .replay {
-    margin-top: 0.55rem;
-    font-size: 0.62rem;
-  }
-
-  .cover-front,
   .cover-inside {
-    padding: 0.75rem;
-  }
-
-  .cover-face::before {
-    inset: 7px;
+    padding-top: calc(37 * var(--u));
   }
 
   .photo-frame {
-    width: 84%;
-    padding: 0.45rem 0.45rem 0.8rem;
-  }
-
-  .photo-frame figcaption {
-    margin-top: 0.45rem;
-  }
-}
-
-@media (max-height: 590px) {
-  .card-shell {
-    height: 92svh;
-    min-height: 0;
-  }
-
-  .letter-page {
-    padding-top: 1.15rem;
+    width: 88%;
   }
 }
 

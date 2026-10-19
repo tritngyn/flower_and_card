@@ -1,6 +1,6 @@
 # Thiệp khu vườn dành tặng Thư
 
-Thiệp web tĩnh gồm animation hoa nở, thao tác chạm toàn màn hình, chuyển cảnh fade và thiệp đôi mở bằng CSS 3D. Không có dependency, build step hay autoplay audio.
+Thiệp web tĩnh gồm nguyên cảnh hoa nở của Flower-animation, thao tác chạm toàn màn hình, chuyển cảnh fade và thiệp đôi có trái tim pop-up bằng CSS 3D. Không có dependency, build step hay autoplay audio.
 
 Trang ảnh đang dùng placeholder. Khi có ảnh thật, thay `.photo-placeholder` trong `dist/index.html` bằng:
 
@@ -13,7 +13,7 @@ Trang ảnh đang dùng placeholder. Khi có ảnh thật, thay `.photo-placehol
 Phục vụ thư mục `dist` bằng một static server, ví dụ:
 
 ```powershell
-npx serve dist
+python -m http.server 4173 --directory dist
 ```
 
 Kiểm tra cấu trúc và asset:
@@ -23,10 +23,10 @@ node scripts/verify.mjs
 node --check dist/assets/card.js
 ```
 
-## Deploy GitHub Pages
+## Deployment
 
-Workflow `.github/workflows/deploy-pages.yml` tự động deploy nội dung trong `dist` khi push lên nhánh `main`. Trong repository GitHub, đặt **Settings → Pages → Source** thành **GitHub Actions**.
+Deployment Vercel sẽ được cấu hình sau khi bản localhost được duyệt.
 
-Animation hoa được chuyển thể từ [gmpsankalpa/Flower-animation](https://github.com/gmpsankalpa/Flower-animation) theo giấy phép MIT. Bản sao giấy phép nằm tại `dist/licenses/Flower-animation-MIT.txt`.
+HTML, CSS keyframes và JavaScript khởi động animation hoa được copy từ [gmpsankalpa/Flower-animation](https://github.com/gmpsankalpa/Flower-animation) theo giấy phép MIT. Bản sao giấy phép nằm tại `dist/licenses/Flower-animation-MIT.txt`.
 
-Chuyển động mở thiệp dùng CSS 3D thuần và tham khảo cơ chế bản lề của mẫu MIT [CSS 3D Lab — Pop-up greeting card](https://css3dlab.edgarasneverdauskas.com/models/greeting/).
+Thiệp được chuyển thể từ snippet MIT [CSS 3D Lab — Pop-up greeting card](https://css3dlab.edgarasneverdauskas.com/models/greeting/), gồm bản lề, perspective, bóng và hai nửa trái tim bật lên. Thông báo giấy phép nằm tại `dist/licenses/CSS-3D-Lab-MIT.txt`.

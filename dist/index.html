@@ -336,10 +336,6 @@
       </div>
         </div>
 
-        <p class="tap-hint" id="tapHint" role="status" aria-live="polite">
-          <span aria-hidden="true">♡</span>
-          Chạm vào màn hình nhé
-        </p>
       </section>
 
       <section class="card-scene" id="cardScene" aria-hidden="true" inert>
@@ -355,51 +351,58 @@
           <span style="--x: 94%; --delay: 1.6s; --drift: 22px; --size: 10px"></span>
         </div>
 
-        <article class="card-shell" id="cardShell" aria-label="Tấm thiệp đôi dành tặng Thư">
-          <section class="letter-page" aria-labelledby="cardTitle">
-            <p class="card-kicker">Gửi Thư,</p>
-            <h1 id="cardTitle" tabindex="-1">Một tấm thiệp nhỏ dành cho em</h1>
-            <div class="ornament" aria-hidden="true"><span></span>♡<span></span></div>
+        <div class="popup-scene">
+          <article class="greeting-card" id="cardShell" aria-label="Tấm thiệp pop-up dành tặng Thư">
+            <div class="popup-card">
+              <i class="card-shadow" aria-hidden="true"></i>
 
-            <div class="letter-copy">
-              <p>Hi Thư nhé, anh gửi em tấm thiệp cute nhỏ nhỏ xinh xinh này nha.</p>
-              <p>
-                Chúc em luôn vui, luôn tự tin và luôn được yêu thương theo cách em thích.
-              </p>
-              <p>
-                Mong thật nhiều điều hạnh phúc sẽ đến với em. Anh sẽ luôn ở đây,
-                lắng nghe em và làm em mỉm cười.
-              </p>
-            </div>
-
-            <p class="signature">Thương em, <strong>Anh ♡</strong></p>
-            <button class="replay" id="replay" type="button">Xem lại khu vườn</button>
-          </section>
-
-          <div class="book-cover" aria-hidden="true">
-            <div class="cover-face cover-front">
-              <span class="cover-flower">✿</span>
-              <p>Một điều nhỏ xinh</p>
-              <strong>dành tặng Thư</strong>
-              <span class="cover-note">Chạm để mở</span>
-            </div>
-
-            <div class="cover-face cover-inside">
-              <figure class="photo-frame">
-                <div class="photo-placeholder" role="img" aria-label="Vị trí dành cho ảnh của Thư">
-                  <span aria-hidden="true">♡</span>
-                  <p>Ảnh của Thư</p>
+              <section class="card-page" aria-labelledby="cardTitle">
+                <div class="letter-content">
+                  <p class="card-kicker">Gửi Thư,</p>
+                  <h1 id="cardTitle" tabindex="-1">Một tấm thiệp nhỏ dành cho em</h1>
+                  <div class="letter-copy">
+                    <p>Hi Thư nhé, anh gửi em tấm thiệp cute nhỏ nhỏ xinh xinh này nha.</p>
+                    <p>
+                      Chúc em luôn vui, luôn tự tin và luôn được yêu thương theo cách em thích.
+                    </p>
+                    <p>
+                      Mong thật nhiều điều hạnh phúc sẽ đến với em. Anh sẽ luôn ở đây,
+                      lắng nghe em và làm em mỉm cười.
+                    </p>
+                  </div>
+                  <p class="signature">Thương em, <strong>Anh ♡</strong></p>
+                  <button class="replay" id="replay" type="button">Xem lại khu vườn</button>
                 </div>
-                <figcaption>My favorite person</figcaption>
-              </figure>
-              <span class="photo-spark photo-spark--one" aria-hidden="true">✦</span>
-              <span class="photo-spark photo-spark--two" aria-hidden="true">♡</span>
+              </section>
+
+              <i class="pop-heart" aria-hidden="true"></i>
+
+              <div class="popup-cover" aria-hidden="true">
+                <div class="cover-front">
+                  <span class="cover-flower">✿</span>
+                  <p>Một điều nhỏ xinh</p>
+                  <strong>dành tặng Thư</strong>
+                </div>
+
+                <div class="cover-inside">
+                  <figure class="photo-frame">
+                    <div class="photo-placeholder">
+                      <span aria-hidden="true">♡</span>
+                      <p>Ảnh của Thư</p>
+                    </div>
+                    <figcaption>My favorite person</figcaption>
+                  </figure>
+                </div>
+
+                <i class="pop-heart pop-heart--left" aria-hidden="true"></i>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
       </section>
     </main>
 
+    <script src="./assets/flower.js"></script>
     <script src="./assets/card.js"></script>
   </body>
 </html>
