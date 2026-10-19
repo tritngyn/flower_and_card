@@ -41,12 +41,14 @@ assert.match(popupStyles, /\.pop\s*{[^}]*width:\s*calc\(28 \* var\(--u\)\);[^}]*
 assert.match(popupStyles, /\.pop-left\s*{[^}]*translate3d\(var\(--x0\), 0, calc\(-16 \* var\(--u\)\)\) rotateY\(180deg\)/s, "Source left heart geometry changed");
 assert.match(styles, /\.greeting\.is-open\s*{[^}]*--open:\s*-166deg/s, "Missing scripted CSS 3D Lab opening state");
 assert.match(script, /cardShell\.classList\.add\(["']is-open["']\)/, "Script must start the card opening animation");
+assert.doesNotMatch(script, /prefers-reduced-motion|return\s+reducedMotion\.matches\s*\?\s*0/, "Core animation timing must not be disabled by the OS motion setting");
+assert.doesNotMatch(styles, /animation-duration:\s*0\.001ms|transition-duration:\s*0\.001ms/, "Core CSS animation must not be collapsed by the OS motion setting");
 assert.match(styles, /\.flower-leaving \.flower-scene/, "Missing flower fade-out state");
 assert.match(styles, /\.card-visible \.card-scene/, "Missing card fade-in state");
 assert.doesNotMatch(html, /<audio\b[^>]*\bautoplay\b/i, "Audio must not autoplay");
 assert.doesNotMatch(html, /(?:src|href)=["']https?:/i, "Runtime assets must stay local");
 
-const localAssets = [...html.matchAll(/(?:src|href)=["']\.\/([^"']+)["']/g)].map((match) => match[1]);
+const localAssets = [...html.matchAll(/(?:src|href)=["']\.\/([^"']+)["']/g)].map((match) => match[1].split("?")[0]);
 for (const asset of localAssets) await access(path.join(dist, asset));
 
 await access(path.join(dist, "licenses", "Flower-animation-MIT.txt"));

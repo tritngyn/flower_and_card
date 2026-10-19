@@ -4,14 +4,9 @@ const cardScene = document.getElementById("cardScene");
 const cardShell = document.getElementById("cardShell");
 const cardTitle = document.getElementById("cardTitle");
 const replayButton = document.getElementById("replay");
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let isReady = false;
 let isOpening = false;
-
-function delay(milliseconds) {
-  return reducedMotion.matches ? 0 : milliseconds;
-}
 
 function unlockExperience() {
   if (isReady) return;
@@ -34,16 +29,16 @@ function openCard() {
     cardScene.setAttribute("aria-hidden", "false");
     cardScene.inert = false;
     body.classList.add("card-visible");
-  }, delay(480));
+  }, 480);
 
   window.setTimeout(() => {
     body.classList.add("card-open");
     cardShell.classList.add("is-open");
-  }, delay(960));
+  }, 960);
 
   window.setTimeout(() => {
     cardTitle.focus({ preventScroll: true });
-  }, delay(2350));
+  }, 2350);
 }
 
 function handleFlowerKeydown(event) {
@@ -54,11 +49,6 @@ function handleFlowerKeydown(event) {
 }
 
 function startExperience() {
-  if (reducedMotion.matches) {
-    unlockExperience();
-    return;
-  }
-
   const finalBloom = document.querySelector(".flower__g-fr__leaf--1");
   finalBloom?.addEventListener("animationend", unlockExperience, { once: true });
   window.setTimeout(unlockExperience, 6500);
