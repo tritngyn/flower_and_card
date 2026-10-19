@@ -1,6 +1,6 @@
 # Thiệp khu vườn dành tặng Thư
 
-Thiệp web tĩnh gồm nguyên cảnh hoa nở của Flower-animation, thao tác chạm toàn màn hình, chuyển cảnh fade và thiệp đôi mở phẳng bằng CSS 3D. Không có dependency, build step hay autoplay audio.
+Thiệp web tĩnh gồm nguyên cảnh hoa nở của Flower-animation, thao tác chạm toàn màn hình, chuyển cảnh fade, nền botanical–bokeh và thiệp đôi mở phẳng bằng CSS 3D. Không có dependency, build step hay autoplay audio.
 
 Trang ảnh đang dùng placeholder. Khi có ảnh thật, thay `.photo-placeholder` trong `dist/index.html` bằng:
 

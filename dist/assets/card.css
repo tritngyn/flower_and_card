@@ -74,15 +74,57 @@ button {
   z-index: 5;
   display: grid;
   place-items: center;
+  overflow: hidden;
   padding: max(0.75rem, env(safe-area-inset-top)) max(0.5rem, env(safe-area-inset-right))
     max(0.75rem, env(safe-area-inset-bottom)) max(0.5rem, env(safe-area-inset-left));
   background:
-    radial-gradient(circle at 18% 18%, rgb(198 77 121 / 0.2), transparent 33%),
-    radial-gradient(circle at 82% 76%, rgb(207 170 104 / 0.12), transparent 36%),
+    radial-gradient(circle at 50% 48%, rgb(255 210 226 / 0.1), transparent 27%),
+    radial-gradient(circle at 16% 18%, rgb(198 77 121 / 0.24), transparent 31%),
+    radial-gradient(circle at 86% 78%, rgb(207 170 104 / 0.18), transparent 34%),
+    radial-gradient(circle at 76% 12%, rgb(121 65 126 / 0.16), transparent 24%),
     linear-gradient(145deg, #120c1b, #211025 50%, #0d0b17);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.75s ease;
+}
+
+.card-scene::before {
+  content: "✿";
+  position: absolute;
+  top: 12vh;
+  left: 8vw;
+  z-index: 0;
+  color: rgb(255 211 226 / 0.12);
+  font-size: clamp(3rem, 7vmin, 6rem);
+  line-height: 1;
+  text-shadow:
+    74vw 5vh 0 rgb(255 231 196 / 0.09),
+    4vw 62vh 0 rgb(244 159 191 / 0.08),
+    76vw 58vh 0 rgb(255 211 226 / 0.1),
+    38vw -8vh 0 rgb(207 170 104 / 0.07);
+  filter: drop-shadow(0 0 1.4rem rgb(198 77 121 / 0.22));
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.card-scene::after {
+  content: "";
+  position: absolute;
+  top: 30vh;
+  left: 12vw;
+  z-index: 0;
+  width: clamp(0.45rem, 1vmin, 0.8rem);
+  aspect-ratio: 1;
+  background: rgb(255 224 235 / 0.32);
+  border-radius: 50%;
+  box-shadow:
+    16vw -17vh 0 0.18rem rgb(255 231 196 / 0.16),
+    64vw -10vh 0 0.08rem rgb(255 211 226 / 0.2),
+    76vw 24vh 0 0.22rem rgb(207 170 104 / 0.13),
+    8vw 45vh 0 0.12rem rgb(244 159 191 / 0.18),
+    46vw 52vh 0 0.05rem rgb(255 231 196 / 0.14);
+  filter: blur(0.4px);
+  pointer-events: none;
 }
 
 .card-visible .card-scene {
@@ -90,8 +132,17 @@ button {
   pointer-events: auto;
 }
 
+.card-visible .card-scene::before {
+  animation: botanical-drift 7s ease-in-out infinite alternate;
+}
+
+.card-visible .card-scene::after {
+  animation: bokeh-breathe 4.8s ease-in-out infinite alternate;
+}
+
 .scene {
   --u: 0.46vmin;
+  z-index: 2;
   opacity: 0;
   transform: translateY(calc(10 * var(--u))) scale(0.94);
   transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -133,10 +184,17 @@ button {
 .page {
   box-sizing: border-box;
   overflow: auto;
+  overscroll-behavior: contain;
   padding: calc(12 * var(--u)) calc(8 * var(--u)) calc(7 * var(--u)) calc(12 * var(--u));
   color: var(--ink);
-  scrollbar-color: rgb(143 49 86 / 0.35) transparent;
-  scrollbar-width: thin;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.page::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .page::before {
@@ -161,28 +219,19 @@ button {
   transform: translateY(0);
 }
 
-.card-kicker {
-  margin: 0;
-  color: var(--rose-dark);
-  font-size: clamp(0.64rem, calc(3.1 * var(--u)), 0.86rem);
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
 .page h1 {
-  margin: calc(1.3 * var(--u)) 0 calc(3 * var(--u));
-  font-family: Georgia, "Times New Roman", serif;
+  margin: 0 0 calc(3 * var(--u));
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
   font-size: clamp(1rem, calc(6.4 * var(--u)), 2.1rem);
-  font-weight: 500;
-  line-height: 1.03;
-  letter-spacing: -0.035em;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
 }
 
 .letter-copy {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   font-size: clamp(0.72rem, calc(3.25 * var(--u)), 0.98rem);
-  line-height: 1.42;
+  line-height: 1.52;
 }
 
 .letter-copy p {
@@ -249,7 +298,7 @@ button {
 
 .cover-copy p {
   margin: calc(4 * var(--u)) 0 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
   font-size: calc(4 * var(--u));
   font-style: italic;
 }
@@ -257,7 +306,7 @@ button {
 .cover-copy strong {
   margin-top: calc(1.5 * var(--u));
   color: var(--cream);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
   font-size: calc(7 * var(--u));
   font-weight: 500;
 }
@@ -298,7 +347,7 @@ button {
 
 .photo-placeholder p {
   margin: calc(1.5 * var(--u)) 0 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   font-size: clamp(0.65rem, calc(3.5 * var(--u)), 0.85rem);
 }
 
@@ -313,6 +362,7 @@ button {
 .petal-field {
   position: fixed;
   inset: -10vh 0 0;
+  z-index: 1;
   overflow: hidden;
   pointer-events: none;
 }
@@ -348,9 +398,27 @@ button {
   }
 }
 
+@keyframes botanical-drift {
+  to {
+    transform: translate3d(0, -1.2vh, 0) rotate(-7deg) scale(1.04);
+  }
+}
+
+@keyframes bokeh-breathe {
+  to {
+    opacity: 0.48;
+    transform: scale(1.16);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .flower__light,
   .petal-field {
     display: none;
+  }
+
+  .card-scene::before,
+  .card-scene::after {
+    animation: none;
   }
 }

@@ -23,6 +23,7 @@ for (const text of ["Hi Thư nhé", "Ảnh của Thư"]) {
 }
 
 assert.doesNotMatch(html, /Ngày Phụ nữ Việt Nam|20\s*[·/]\s*10/i, "Visible date copy must be removed");
+assert.doesNotMatch(html, /Gửi Thư/i, "Formal letter kicker must be removed");
 assert.doesNotMatch(html, /Chạm vào màn hình nhé|Mở thiệp của em|class=["'][^"']*teddy/i, "Visible CTA and teddy must be removed");
 assert.match(script, /flowerScene\.addEventListener\(["']click["'], openCard\)/, "Full-screen click must open the card");
 assert.match(script, /flowerScene\.addEventListener\(["']keydown["']/, "Keyboard opening must remain supported");
@@ -42,6 +43,10 @@ assert.match(popupStyles, /\.pop-left\s*{[^}]*translate3d\(var\(--x0\), 0, calc\
 assert.match(styles, /\.scene\s*{[^}]*--u:\s*0\.46vmin/s, "Card view must be enlarged");
 assert.match(styles, /\.greeting\.is-open\s*{[^}]*--open:\s*-180deg;[^}]*--view:\s*0deg/s, "Opened pages must face the viewer in parallel");
 assert.match(styles, /\.greeting\.is-open \.card\s*{[^}]*rotateX\(0deg\)[^}]*rotateY\(var\(--view\)\)/s, "Opened card must finish front-on");
+assert.match(styles, /\.page\s*{[^}]*scrollbar-width:\s*none/s, "Letter scrollbar must be hidden without disabling scrolling");
+assert.match(styles, /\.page::\-webkit-scrollbar\s*{[^}]*display:\s*none/s, "WebKit letter scrollbar must be hidden");
+assert.match(styles, /\.card-scene::before\s*{[^}]*content:\s*["']✿["']/s, "Botanical background decoration is missing");
+assert.match(html, /card\.css\?v=7/, "Runtime assets must use the v7 cache key");
 assert.match(script, /cardShell\.classList\.add\(["']is-open["']\)/, "Script must start the card opening animation");
 assert.doesNotMatch(script, /prefers-reduced-motion|return\s+reducedMotion\.matches\s*\?\s*0/, "Core animation timing must not be disabled by the OS motion setting");
 assert.doesNotMatch(styles, /animation-duration:\s*0\.001ms|transition-duration:\s*0\.001ms/, "Core CSS animation must not be collapsed by the OS motion setting");
