@@ -2,11 +2,7 @@
 
 Thiệp web tĩnh gồm nguyên cảnh hoa nở của Flower-animation, thao tác chạm toàn màn hình, chuyển cảnh fade, nền botanical–bokeh và thiệp đôi mở phẳng bằng CSS 3D. Không có dependency, build step hay autoplay audio.
 
-Trang ảnh đang dùng placeholder. Khi có ảnh thật, thay `.photo-placeholder` trong `dist/index.html` bằng:
-
-```html
-<img class="girlfriend-photo" src="./assets/thu.jpg" alt="Ảnh của Thư" />
-```
+Trang trái của thiệp dùng ảnh `dist/assets/IMG_4096.PNG`. Thay file này bằng ảnh cùng tên để đổi ảnh mà không cần sửa HTML.
 
 ## Chạy thử
 

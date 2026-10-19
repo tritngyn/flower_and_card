@@ -8,7 +8,7 @@
 
 html {
   color-scheme: dark;
-  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
 }
 
 button {
@@ -183,12 +183,19 @@ button {
 
 .page {
   box-sizing: border-box;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
   padding: calc(12 * var(--u)) calc(8 * var(--u)) calc(7 * var(--u)) calc(12 * var(--u));
   color: var(--ink);
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.greeting.is-open .page {
+  pointer-events: auto;
 }
 
 .page::-webkit-scrollbar {
@@ -221,15 +228,15 @@ button {
 
 .page h1 {
   margin: 0 0 calc(3 * var(--u));
-  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
   font-size: clamp(1rem, calc(6.4 * var(--u)), 2.1rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.12;
   letter-spacing: -0.02em;
 }
 
 .letter-copy {
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
   font-size: clamp(0.72rem, calc(3.25 * var(--u)), 0.98rem);
   line-height: 1.52;
 }
@@ -247,8 +254,9 @@ button {
   flex-direction: column;
   margin: calc(2.5 * var(--u)) 0 0;
   color: var(--rose-dark);
-  font-family: "Segoe Print", "Comic Sans MS", cursive;
+  font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
   font-size: clamp(0.68rem, calc(2.9 * var(--u)), 0.9rem);
+  font-style: italic;
 }
 
 .signature strong {
@@ -298,7 +306,7 @@ button {
 
 .cover-copy p {
   margin: calc(4 * var(--u)) 0 0;
-  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
   font-size: calc(4 * var(--u));
   font-style: italic;
 }
@@ -306,7 +314,7 @@ button {
 .cover-copy strong {
   margin-top: calc(1.5 * var(--u));
   color: var(--cream);
-  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  font-family: "Segoe UI", "Noto Sans", Arial, sans-serif;
   font-size: calc(7 * var(--u));
   font-weight: 500;
 }
@@ -327,36 +335,12 @@ button {
   transform: rotate(-2.5deg);
 }
 
-.photo-placeholder,
 .girlfriend-photo {
-  display: grid;
+  display: block;
   width: 100%;
   aspect-ratio: 4 / 5;
-  place-content: center;
-  color: rgb(255 255 255 / 0.88);
-  background:
-    radial-gradient(circle at 28% 20%, rgb(255 255 255 / 0.25), transparent 26%),
-    linear-gradient(145deg, #d47798, #984061 55%, #6f2c4d);
   object-fit: cover;
-}
-
-.photo-placeholder span {
-  font-size: calc(13 * var(--u));
-  text-align: center;
-}
-
-.photo-placeholder p {
-  margin: calc(1.5 * var(--u)) 0 0;
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-  font-size: clamp(0.65rem, calc(3.5 * var(--u)), 0.85rem);
-}
-
-.photo-frame figcaption {
-  margin-top: calc(2 * var(--u));
-  color: var(--rose-dark);
-  font-family: "Segoe Print", "Comic Sans MS", cursive;
-  font-size: clamp(0.62rem, calc(3 * var(--u)), 0.8rem);
-  text-align: center;
+  object-position: 50% center;
 }
 
 .petal-field {

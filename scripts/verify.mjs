@@ -45,8 +45,14 @@ assert.match(styles, /\.greeting\.is-open\s*{[^}]*--open:\s*-180deg;[^}]*--view:
 assert.match(styles, /\.greeting\.is-open \.card\s*{[^}]*rotateX\(0deg\)[^}]*rotateY\(var\(--view\)\)/s, "Opened card must finish front-on");
 assert.match(styles, /\.page\s*{[^}]*scrollbar-width:\s*none/s, "Letter scrollbar must be hidden without disabling scrolling");
 assert.match(styles, /\.page::\-webkit-scrollbar\s*{[^}]*display:\s*none/s, "WebKit letter scrollbar must be hidden");
+assert.match(styles, /\.page\s*{[^}]*overflow-y:\s*auto[^}]*touch-action:\s*pan-y/s, "Letter page must support touch scrolling");
+assert.match(styles, /\.greeting\.is-open \.page\s*{[^}]*pointer-events:\s*auto/s, "Opened letter page must accept scroll input");
+assert.match(html, /class=["']girlfriend-photo["'][^>]*src=["']\.\/assets\/IMG_4096\.PNG\?v=8["'][^>]*alt=["']Ảnh của Thư["']/s, "Thư's photo must be rendered in the left page");
+assert.doesNotMatch(html, /photo-placeholder/, "Photo placeholder must be removed");
+assert.match(styles, /font-family:\s*"Segoe UI",\s*"Noto Sans",\s*Arial,\s*sans-serif/, "Card must use a Vietnamese-capable font stack");
+assert.doesNotMatch(styles, /Segoe Print|Bradley Hand|Comic Sans MS|Trebuchet MS/, "Card must not use fonts with inconsistent Vietnamese glyphs");
 assert.match(styles, /\.card-scene::before\s*{[^}]*content:\s*["']✿["']/s, "Botanical background decoration is missing");
-assert.match(html, /card\.css\?v=7/, "Runtime assets must use the v7 cache key");
+assert.match(html, /card\.css\?v=8/, "Runtime assets must use the v8 cache key");
 assert.match(script, /cardShell\.classList\.add\(["']is-open["']\)/, "Script must start the card opening animation");
 assert.doesNotMatch(script, /prefers-reduced-motion|return\s+reducedMotion\.matches\s*\?\s*0/, "Core animation timing must not be disabled by the OS motion setting");
 assert.doesNotMatch(styles, /animation-duration:\s*0\.001ms|transition-duration:\s*0\.001ms/, "Core CSS animation must not be collapsed by the OS motion setting");
