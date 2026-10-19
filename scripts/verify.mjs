@@ -31,15 +31,17 @@ assert.equal(createHash("sha256").update(flowerStyles).digest("hex"), "f2c2f4b41
 for (const className of ["flower--1", "flower--2", "flower--3", "flower__g-long", "flower__g-front", "flower__g-fr", "long-g--7"]) {
   assert.match(html, new RegExp(className), `Missing original flower structure: ${className}`);
 }
-for (const className of ["scene", "greeting", "card", "shadow", "page", "pop", "cover", "front", "inside"]) {
+for (const className of ["scene", "greeting", "card", "shadow", "page", "cover", "front", "inside"]) {
   assert.match(html, new RegExp(`class=["'][^"']*\\b${className}\\b`), `Missing source card class: ${className}`);
 }
-assert.match(html, /class=["']pop pop-left["']/, "Missing source left half of the pop-up heart");
+assert.doesNotMatch(html, /class=["'][^"']*\bpop\b/, "The center pop-up heart must be removed");
 assert.match(popupStyles, /\.greeting\s*{[^}]*--open:\s*-96deg;[^}]*--view:\s*40deg;[^}]*--x0:\s*calc\(14 \* var\(--u\)\);[^}]*--pop:\s*0;[^}]*--shift:\s*calc\(-34 \* var\(--u\)\)/s, "Source card defaults changed");
 assert.match(popupStyles, /\.greeting:hover,\s*\.greeting:focus-visible\s*{[^}]*--open:\s*-166deg;[^}]*--view:\s*24deg;[^}]*--x0:\s*calc\(2 \* var\(--u\)\);[^}]*--pop:\s*1;[^}]*--shift:\s*0px/s, "Source card opening state changed");
 assert.match(popupStyles, /\.pop\s*{[^}]*width:\s*calc\(28 \* var\(--u\)\);[^}]*height:\s*calc\(48 \* var\(--u\)\);[^}]*translate3d\(var\(--x0\), 0, calc\(16 \* var\(--u\)\)\)/s, "Source right heart geometry changed");
 assert.match(popupStyles, /\.pop-left\s*{[^}]*translate3d\(var\(--x0\), 0, calc\(-16 \* var\(--u\)\)\) rotateY\(180deg\)/s, "Source left heart geometry changed");
-assert.match(styles, /\.greeting\.is-open\s*{[^}]*--open:\s*-166deg/s, "Missing scripted CSS 3D Lab opening state");
+assert.match(styles, /\.scene\s*{[^}]*--u:\s*0\.46vmin/s, "Card view must be enlarged");
+assert.match(styles, /\.greeting\.is-open\s*{[^}]*--open:\s*-180deg;[^}]*--view:\s*0deg/s, "Opened pages must face the viewer in parallel");
+assert.match(styles, /\.greeting\.is-open \.card\s*{[^}]*rotateX\(0deg\)[^}]*rotateY\(var\(--view\)\)/s, "Opened card must finish front-on");
 assert.match(script, /cardShell\.classList\.add\(["']is-open["']\)/, "Script must start the card opening animation");
 assert.doesNotMatch(script, /prefers-reduced-motion|return\s+reducedMotion\.matches\s*\?\s*0/, "Core animation timing must not be disabled by the OS motion setting");
 assert.doesNotMatch(styles, /animation-duration:\s*0\.001ms|transition-duration:\s*0\.001ms/, "Core CSS animation must not be collapsed by the OS motion setting");
